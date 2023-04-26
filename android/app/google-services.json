@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "500317680360",
+    "project_id": "booking-library-eb022",
+    "storage_bucket": "booking-library-eb022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500317680360:android:5ccb9f08e42779f96d4f5d",
+        "android_client_info": {
+          "package_name": "com.uy.zootecnia.reserve_library.reserve_library"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500317680360-vdo1i0gckiosr59ot8f8jbb2kqs1a1gp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz3pK7QfMgvpNn0DRAzaRQcX32KNf2KtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500317680360-vdo1i0gckiosr59ot8f8jbb2kqs1a1gp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "500317680360-hb6m05vtoffvmie4t3rhrfuhp7qv4l38.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.uy.zootecnia.reservelibrary.reserveLibrary"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
