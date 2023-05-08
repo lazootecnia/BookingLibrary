@@ -1,16 +1,38 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reserve_library/gui/bookings/bookings_controller.dart';
+import 'package:reserve_library/gui/login/login_controller.dart';
 
 class BookingsGui extends GetView<BookingsController> {
   BookingsGui({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final LoginController loginController = Get.find();
     return Scaffold(
         appBar: AppBar(
           title: const Text("Horarios Reservados"),
+          actions: <Widget>[
+            Obx(
+              () => IconButton(
+                icon: controller.login.value
+                    ? const Icon(Icons.logout_outlined)
+                    : const Icon(Icons.login_outlined),
+                tooltip: controller.login.value ? 'Salir' : 'Login',
+                onPressed: () {
+                  if (controller.login.value){
+                    Get.log("Desconecto al usuario: ${FirebaseAuth.instance.currentUser!.email}");
+                    FirebaseAuth.instance.signOut();
+
+                } else {
+                    Get.toNamed("/login");
+                  }
+                },
+              ),
+            ),
+          ],
         ),
         body: Center(
           child: Column(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:reserve_library/data/booking.dart';
 
@@ -9,9 +10,24 @@ class BookingsController extends GetxController {
 
   late List<Booking> bookings = []; //.obs as List<Booking>;
 
+  var login = true.obs;
+  var admin = false.obs;
+
   BookingsController() {
     now = DateTime.now();
     loadBooks();
+    print('+++++++++++++++++++++++++++++ ${login.value}');
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        login.value = false;
+        print('+++++++++++++++++++++++++++++ ${login.value}');
+
+        print('User is currently signed out!');
+      } else {
+        login.value = true;
+        print('User is signed in!');
+      }
+    });
   }
 
   get firstDate => now.subtract(const Duration(days: 5));

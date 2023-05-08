@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,27 +6,38 @@ import 'package:reserve_library/gui/booking/booking_binding.dart';
 import 'package:reserve_library/gui/booking/booking_gui.dart';
 import 'package:reserve_library/gui/bookings/bookings_binding.dart';
 import 'package:reserve_library/gui/bookings/bookings_gui.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:reserve_library/gui/login/login_binding.dart';
+import 'package:reserve_library/gui/login/login_gui.dart';
 
 import 'firebase_options.dart';
+
+late final FirebaseAuth auth;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initServices();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final providers = [GoogleAuthProvider()];
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
         title: 'Reserva de Horas',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData.light(useMaterial3: true),
         initialRoute: "/",
         getPages: [
+          GetPage(
+            name: "/login",
+            page: () => LoginGui(),
+            binding: LoginBinding(),
+          ),
           GetPage(
             name: "/",
             page: () => BookingsGui(),
@@ -45,13 +56,8 @@ initServices() async {
   print('starting services ...');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-
   );
-
-  Firebase.apps.forEach((e) => print("${e.name}"));
-
-
-  // FirebaseFirestore.instance
+  auth = FirebaseAuth.instance;
 
   print('All services started...');
 }
