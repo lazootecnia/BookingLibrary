@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reserve_library/gui/booking/booking_binding.dart';
 import 'package:reserve_library/gui/booking/booking_gui.dart';
+import 'package:reserve_library/gui/booking_view/booking_binding.dart';
+import 'package:reserve_library/gui/booking_view/booking_view_gui.dart';
 import 'package:reserve_library/gui/bookings/bookings_binding.dart';
 import 'package:reserve_library/gui/bookings/bookings_gui.dart';
 import 'package:reserve_library/gui/login/login_binding.dart';
+import 'package:reserve_library/gui/login/login_controller.dart';
 import 'package:reserve_library/gui/login/login_gui.dart';
 
 import 'firebase_options.dart';
@@ -34,7 +37,7 @@ class MyApp extends StatelessWidget {
         initialRoute: "/",
         getPages: [
           GetPage(
-            name: "/login",
+            name: "/LOGIN",
             page: () => LoginGui(),
             binding: LoginBinding(),
           ),
@@ -48,6 +51,11 @@ class MyApp extends StatelessWidget {
             page: () => BookingGui(),
             binding: BookingBinding(),
           ),
+          GetPage(
+            name: "/BOOKING_VIEW",
+            page: () => BookingViewGui(),
+            binding: BookingViewBinding(),
+          ),
         ]);
   }
 }
@@ -58,6 +66,6 @@ initServices() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   auth = FirebaseAuth.instance;
-
+  Get.put(LoginController());
   print('All services started...');
 }

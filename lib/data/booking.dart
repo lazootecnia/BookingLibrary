@@ -23,13 +23,13 @@ class Booking {
 
   Booking.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : uuid = doc.id,
-        start = doc.data()!["start"],
-        end = doc.data()!["end"],
+        start = (doc.data()!["start"] as Timestamp).toDate(),
+        end = (doc.data()!["end"] as Timestamp).toDate(),
         name = doc.data()!["name"],
         lastName = doc.data()!["lastName"],
         email = doc.data()!["email"],
-        hall = doc.data()!["hall"],
-        videoConference = doc.data()!["videoConference"],
+        hall = doc.data()!["hall"] ?? false,
+        videoConference = doc.data()!["videoConference"] ?? false,
         approved = doc.data()!["approved"],
         notAssist = doc.data()!["notAssist"];
 

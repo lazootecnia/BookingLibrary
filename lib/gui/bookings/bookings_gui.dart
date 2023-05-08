@@ -8,26 +8,28 @@ import 'package:reserve_library/gui/login/login_controller.dart';
 class BookingsGui extends GetView<BookingsController> {
   BookingsGui({super.key});
 
+  late LoginController loginController;
+
   @override
   Widget build(BuildContext context) {
-    final LoginController loginController = Get.find();
+    loginController = Get.find();
     return Scaffold(
         appBar: AppBar(
           title: const Text("Horarios Reservados"),
           actions: <Widget>[
             Obx(
               () => IconButton(
-                icon: controller.login.value
+                icon: loginController.login.value
                     ? const Icon(Icons.logout_outlined)
                     : const Icon(Icons.login_outlined),
-                tooltip: controller.login.value ? 'Salir' : 'Login',
+                tooltip: loginController.login.value ? 'Salir' : 'Login',
                 onPressed: () {
-                  if (controller.login.value){
-                    Get.log("Desconecto al usuario: ${FirebaseAuth.instance.currentUser!.email}");
+                  if (loginController.login.value) {
+                    Get.log(
+                        "Desconecto al usuario: ${FirebaseAuth.instance.currentUser!.email}");
                     FirebaseAuth.instance.signOut();
-
-                } else {
-                    Get.toNamed("/login");
+                  } else {
+                    Get.toNamed("/LOGIN");
                   }
                 },
               ),
@@ -78,19 +80,30 @@ class BookingsGui extends GetView<BookingsController> {
               child: Column(
                 children: [
                   ListTile(
-                      title: Text(
-                        "${item.lastName} ${item.name}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              "Desde: ${_dateFormated(item.start)} Hasta: ${_dateFormated(item.end)} "),
-                          Text(
-                              "Sala: ${item.hall ? 'Si' : 'No'}, Video Conferencia: ${item.videoConference ? 'Si' : 'No'} "),
-                        ],
-                      )),
+                    title: Text(
+                      "${item.lastName} ${item.name}",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "Desde: ${_dateFormated(item.start)} Hasta: ${_dateFormated(item.end)} "),
+                        Text(
+                            "Sala: ${item.hall ? 'Si' : 'No'}, Video Conferencia: ${item.videoConference ? 'Si' : 'No'} "),
+                      ],
+                    ),
+                    trailing: Obx(
+                      () => loginController.admin.value
+                          ? IconButton(
+                              tooltip: "Ver o Editar",
+                              onPressed: () {
+                                Get.toNamed("/BOOKING_VIEW", arguments: item.uuid);
+                              },
+                              icon: Icon(Icons.more_vert))
+                          : SizedBox(height: 0.01),
+                    ),
+                  ),
                 ],
               ),
             );

@@ -26,6 +26,8 @@ class BookingController extends GetxController {
 
   BookingController() {
     now = DateTime.now();
+
+    Get.log("Se paso el parametro : ${Get.arguments}");
   }
 
   @override
