@@ -53,7 +53,7 @@ class Booking {
       'lastName': lastName,
       'email': email,
       'hall': hall,
-      'hallAndVideoConference': videoConference,
+      'videoConference': videoConference,
       'approved': approved,
       'notAssist': notAssist,
     };

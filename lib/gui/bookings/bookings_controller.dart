@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reserve_library/data/booking.dart';
 
@@ -49,5 +50,49 @@ class BookingsController extends GetxController {
       });
     });
     update(["bookings"]);
+  }
+
+  Future<void> view(String? uuid) async {
+    var data = await Get.toNamed("/BOOKING_VIEW", arguments: uuid);
+    Get.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++$data");
+    if (data is String && data.isNotEmpty && data == "success") {
+      Get.snackbar(
+        "Información",
+        "Se borro correctamente la reserva.",
+        icon: const Icon(Icons.info),
+      );
+
+      loadBooks();
+      update(["bookings"]);
+    } else if (data is String) {
+      Get.log("No se paso parametro para la reserva");
+      Get.snackbar(
+        "Error",
+        "No se selecciono ninguna reserva.",
+        icon: const Icon(Icons.add_alert),
+      );
+    }
+  }
+
+  Future<void> add(DateTime now) async {
+    var data = await Get.toNamed("BOOKING", arguments: [now]);
+
+    if (data is String && data.isNotEmpty && data == "success") {
+      Get.snackbar(
+        "Información",
+        "Se guardó correctamente la reserva.",
+        icon: const Icon(Icons.info),
+      );
+
+      loadBooks();
+      update(["bookings"]);
+    } else if (data is String) {
+      Get.log("Se produjo un error al agregar la reserva");
+      Get.snackbar(
+        "Error",
+        "Se produjo un error al guardar la reserva.",
+        icon: const Icon(Icons.add_alert),
+      );
+    }
   }
 }

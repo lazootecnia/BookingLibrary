@@ -24,6 +24,14 @@ class LoginController extends GetxController {
     });
   }
 
+  @override
+  void onReady() {
+    super.onReady();
+    if (Get.previousRoute.isEmpty){
+      Get.offAllNamed("/");
+    }
+  }
+
   Future<UserCredential> signInWithGoogle() async {
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
     googleProvider.setCustomParameters({'login_hint': 'user@example.com'});

@@ -33,7 +33,17 @@ class BookingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    Get.log("------------------------------------------------ ${Get.previousRoute}");
+
     if (Get.arguments != null) now = Get.arguments[0];
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    if (Get.previousRoute.isEmpty){
+      Get.offAllNamed("/");
+    }
   }
 
   void save() {
@@ -50,20 +60,9 @@ class BookingController extends GetxController {
 
     _bookingCollection.add(booking.toMap()).then(
       (value) {
-        Get.log("Save Booking");
+        Get.log("Save a new booking ");
 
-        Get.back();
-        Get.offNamed("/");
-
-        Get.snackbar(
-          'Reserva Guardada',
-          'Se guardó correctamente la reserva',
-          snackPosition: SnackPosition.BOTTOM,
-          forwardAnimationCurve: Curves.elasticInOut,
-          reverseAnimationCurve: Curves.easeOut,
-          icon: const Icon(Icons.info_outline),
-          duration: const Duration(seconds: 3),
-        );
+        Get.back(result: 'success');
       },
     ).catchError(
       (error) {

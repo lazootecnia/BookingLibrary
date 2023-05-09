@@ -55,7 +55,7 @@ class BookingsGui extends GetView<BookingsController> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Get.toNamed("BOOKING", arguments: [controller.now]);
+            controller.add(controller.now);
           },
           tooltip: 'Agregar',
           child: const Icon(Icons.add),
@@ -98,7 +98,7 @@ class BookingsGui extends GetView<BookingsController> {
                           ? IconButton(
                               tooltip: "Ver o Editar",
                               onPressed: () {
-                                Get.toNamed("/BOOKING_VIEW", arguments: item.uuid);
+                                controller.view(item.uuid);
                               },
                               icon: Icon(Icons.more_vert))
                           : SizedBox(height: 0.01),

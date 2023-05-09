@@ -20,6 +20,9 @@ class BookingViewController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    if (Get.previousRoute.isEmpty) {
+      Get.offAllNamed("/");
+    }
     Get.log("Se paso el parametro : ${Get.arguments}");
     if (Get.arguments != null) {
       final docRef = _bookingCollection.doc(Get.arguments);
@@ -30,7 +33,7 @@ class BookingViewController extends GetxController {
                 doc as DocumentSnapshot<Map<String, dynamic>>));
             loading.value = false;
           } else {
-            Get.offAllNamed("/");
+            Get.back();
             Get.snackbar(
               "Error",
               "No se encontró una reserva",
@@ -56,23 +59,15 @@ class BookingViewController extends GetxController {
       final docRef = _bookingCollection.doc(booking.value.uuid);
       docRef.delete().then(
         (doc) {
-          Get.offAllNamed("/", arguments: booking.value.start);
-          Get.snackbar(
-            "Información",
-            "Se borro correctamente la reserva.",
-            icon: const Icon(Icons.info),
-          );
+          Get.log(
+              "++++++++++++++++++++++++++++++++++++++++++++++++++++++DELETE");
+          Get.back();
+          Get.back(result: 'success');
         },
         onError: (e) => print("Error getting document: $e"),
       );
     } else {
-      Get.log("No se paso parametro para la reserva");
-      Get.offAllNamed("/");
-      Get.snackbar(
-        "Error",
-        "No se selecciono ninguna reserva.",
-        icon: const Icon(Icons.add_alert),
-      );
+      Get.back(result: 'error');
     }
   }
 }
