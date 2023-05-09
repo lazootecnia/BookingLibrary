@@ -11,6 +11,7 @@ import 'package:reserve_library/gui/bookings/bookings_gui.dart';
 import 'package:reserve_library/gui/login/login_binding.dart';
 import 'package:reserve_library/gui/login/login_controller.dart';
 import 'package:reserve_library/gui/login/login_gui.dart';
+import 'package:reserve_library/gui/page_not_found.dart';
 
 import 'firebase_options.dart';
 
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(useMaterial3: true),
         initialRoute: "/",
+        unknownRoute: GetPage(name: '/notfound', page: () => PageNotFound()),
         getPages: [
           GetPage(
             name: "/LOGIN",
