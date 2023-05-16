@@ -5,6 +5,7 @@ import 'package:reserve_library/gui/booking/booking_controller.dart';
 
 class BookingGui extends GetView<BookingController> {
   BookingGui({super.key});
+  bool dobleClick = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,11 @@ class BookingGui extends GetView<BookingController> {
                   onTap: () async {
                     //https://www.fluttercampus.com/guide/40/how-to-show-time-picker-on-textfield-tap-and-get-formatted-time-in-flutter/
                     TimeOfDay? pickedTime = await showTimePicker(
-                        context: context,
+
+                      context: context,
                         initialTime: controller
-                            .getTimeOfDay(controller.startTimeController));
+                            .getTimeOfDay(controller.startTimeController),
+                    );
                     if (pickedTime != null) {
                       controller.processStart(pickedTime);
                     } else {
@@ -110,7 +113,8 @@ class BookingGui extends GetView<BookingController> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (controller.loginFormKey.currentState!.validate()) {
+            if (controller.loginFormKey.currentState!.validate() && !dobleClick) {
+              dobleClick = true;
               controller.save();
             }
           },

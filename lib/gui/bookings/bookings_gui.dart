@@ -63,7 +63,7 @@ class BookingsGui extends GetView<BookingsController> {
   }
 
   String _dateFormated(DateTime dateTime) {
-    return DateFormat('HH:MM').format(dateTime);
+    return DateFormat('HH:mm').format(dateTime);
   }
 
   Widget _list() {

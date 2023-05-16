@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reserve_library/data/booking.dart';
 import 'package:reserve_library/gui/booking/booking_binding.dart';
 import 'package:reserve_library/gui/booking/booking_gui.dart';
 import 'package:reserve_library/gui/booking_view/booking_binding.dart';
@@ -12,10 +13,13 @@ import 'package:reserve_library/gui/login/login_binding.dart';
 import 'package:reserve_library/gui/login/login_controller.dart';
 import 'package:reserve_library/gui/login/login_gui.dart';
 import 'package:reserve_library/gui/page_not_found.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'firebase_options.dart';
 
 late final FirebaseAuth auth;
+
+final List<Booking> misReservas = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +39,13 @@ class MyApp extends StatelessWidget {
         title: 'Reserva de Horas',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(useMaterial3: true),
+        supportedLocales: const [Locale("es", "UY"), Locale("es")],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: const Locale('es', 'UY'),
         initialRoute: "/",
         unknownRoute: GetPage(name: '/notfound', page: () => PageNotFound()),
         getPages: [
